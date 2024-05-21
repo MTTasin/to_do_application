@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+{% load static tailwind_tags %}
+<html lang="en" dir="ltr">
+  <head>
+    {% tailwind_css %}
+    <meta charset="utf-8" />
+    <title>{{title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--style-->
+  </head>
+
+  <body>
+    {% if messages %} {% for message in messages %}
+    <div class="bg-inherit">
+      <strong class="bg-green-400 font-serif from-stone-600"
+        >{{message}}</strong
+      >
+    </div>
+    {% endfor %} {% endif %}
+
+    <center class="">
+      <h1 class="text-5xl text-black bg-cyan-400 font-mono">
+        <i>TODO LIST</i>
+      </h1>
+      <hr />
+    </center>
+
+    <div class="grid sm:grid-cols-1 md:grid-cols-2 mt-16 gap-16">
+      <div class="grid items-start ">
+        {% for i in list %}
+        <div class="p-4 bg-slate-500 rounded-3xl" style="margin-top: 10px">
+          <center class=""><b>{{i.title}}</b></center>
+          <hr />
+          <p class="text">Date and time: {{i.date}}</p>
+          <hr />
+          {{i.details}}
+          <br />
+          <br />
+          <form action="/del/{{i.id}}/" method="POST">
+            {% csrf_token %}
+            <button
+              value="remove"
+              type="submit"
+              class="btn btn-primary"
+              style="float: right"
+            >
+              <span class="glyphicon glyphicon-trash"></span> remove
+            </button>
+          </form>
+        </div>
+        {% endfor%}
+      </div>
+      <div class="grid-cols-2 bg-cyan-200">
+        <div class="submit_form bg-slate-500 rounded-3xl">
+          <form method="POST" class="p-4 w-5">
+            {% csrf_token %} {{forms}}
+            <center>
+              <input type="submit" class="btn btn-default" value="submit" />
+            </center>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -16,8 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from to_do_app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("", views.index, name="index"),
+    path('del/<str:item_id>/', views.remove, name="del"),
     path("__reload__/", include("django_browser_reload.urls")),
 ]
