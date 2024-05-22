@@ -21,6 +21,8 @@ from to_do_app import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", views.index, name="index"),
+    path("done/<str:item_id>/", views.done, name="done"),
     path('del/<str:item_id>/', views.remove, name="del"),
+    path('del_done/<str:item_id>/', views.remove_done, name="del_done"),
     path("__reload__/", include("django_browser_reload.urls")),
 ]

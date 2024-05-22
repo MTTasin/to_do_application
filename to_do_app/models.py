@@ -5,7 +5,16 @@ from django.utils import timezone
 class Todo(models.Model):
     title = models.CharField(max_length=100)
     details = models.TextField()
-    date = models.DateTimeField(default=timezone.now)
+    date = models.DateTimeField(auto_now_add=True)
  
+    def __str__(self):
+        return self.title
+
+
+class task_done(models.Model):
+    title = models.CharField(max_length=100)
+    details = models.TextField()
+    date = models.DateTimeField(default=timezone.now)
+
     def __str__(self):
         return self.title

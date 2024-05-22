@@ -1,65 +1,404 @@
 <!DOCTYPE html>
 {% load static tailwind_tags %}
 <html lang="en" dir="ltr">
-  <head>
-    {% tailwind_css %}
-    <meta charset="utf-8" />
-    <title>{{title}}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!--style-->
-  </head>
 
-  <body>
-    {% if messages %} {% for message in messages %}
-    <div class="bg-inherit">
-      <strong class="bg-green-400 font-serif from-stone-600"
-        >{{message}}</strong
-      >
+<head>
+  {% tailwind_css %}
+  <meta charset="utf-8" />
+  <title>{{title}}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!--style-->
+</head>
+
+<body class="antialiased bg-slate-200 text-slate-700 mx-2">
+  {% if messages %} {% for message in messages %}
+  <div
+    class="flex justify-center items-center m-1 font-medium py-1 px-2 text-center rounded-md text-white bg-green-700 border border-green-700 ">
+    <div slot="avatar">
+      <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        class="feather feather-check-circle w-5 h-5 mx-2">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+      </svg>
     </div>
-    {% endfor %} {% endif %}
+    <div class="text-xl font-normal  max-w-full flex-initial mx-auto">
+      <div class="py-2">{{message}}
+      </div>
+    </div>
+    <div class="flex flex-auto flex-row-reverse">
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          class="feather feather-x cursor-pointer hover:text-green-400 rounded-full w-5 h-5 ml-2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </div>
+    </div>
+  </div>
+  </div>
+  {% endfor %} {% endif %}
 
-    <center class="">
-      <h1 class="text-5xl text-black bg-cyan-400 font-mono">
-        <i>TODO LIST</i>
-      </h1>
-      <hr />
-    </center>
 
-    <div class="grid sm:grid-cols-1 md:grid-cols-2 mt-16 gap-16">
-      <div class="grid items-start ">
+  <div class="grid sm:grid-cols-1 md:grid-cols-2 mt-16 gap-1 justify-between">
+    <div class="max-w-screen-md mx-auto bg-white p-4 rounded-xl shadow shadow-slate-300">
+      <div class="flex flex-row justify-between items-center">
+        <div>
+          <h1 class="text-3xl font-medium">Tasks list</h1>
+        </div>
+      </div>
+      <p class="text-slate-500">Hello, here are your tasks to do</p>
+      <div id="tasks" class="my-5">
         {% for i in list %}
-        <div class="p-4 bg-slate-500 rounded-3xl" style="margin-top: 10px">
-          <center class=""><b>{{i.title}}</b></center>
-          <hr />
-          <p class="text">Date and time: {{i.date}}</p>
-          <hr />
-          {{i.details}}
+        <div id="task"
+          class="justify-between items-center border-b border-slate-200 py-6 px-1 border-l-4 border-l-transparent bg-gradient-to-r from-transparent to-transparent hover:from-slate-100 transition ease-linear duration-150">
+          <div class="inline-flex items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-4 h-4 text-slate-500">
+              <path
+                d="M0 80V229.5c0 17 6.7 33.3 18.7 45.3l176 176c25 25 65.5 25 90.5 0L418.7 317.3c25-25 25-65.5 0-90.5l-176-176c-12-12-28.3-18.7-45.3-18.7H48C21.5 32 0 53.5 0 80zm112 32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z" />
+            </svg>
+            <div>{{i.title}}</div>
+          </div>
           <br />
+          <div class="inline-flex items-center space-x-2">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" stroke="currentColor" fill="currentColor"
+              stroke-width="1.5" class="w-4 h-4">
+              <path
+                d="M128 0c17.7 0 32 14.3 32 32V64H288V32c0-17.7 14.3-32 32-32s32 14.3 32 32V64h48c26.5 0 48 21.5 48 48v48H0V112C0 85.5 21.5 64 48 64H96V32c0-17.7 14.3-32 32-32zM0 192H448V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V192zm64 80v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H80c-8.8 0-16 7.2-16 16zm128 0v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H208c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H336zM64 400v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H80c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H208zm112 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H336c-8.8 0-16 7.2-16 16z" />
+            </svg>
+            <div>{{i.date}}</div>
+          </div>
           <br />
-          <form action="/del/{{i.id}}/" method="POST">
-            {% csrf_token %}
-            <button
-              value="remove"
-              type="submit"
-              class="btn btn-primary"
-              style="float: right"
-            >
-              <span class="glyphicon glyphicon-trash"></span> remove
-            </button>
-          </form>
+          <div class="inline-flex items-center space-x-2">
+            <div class="text-slate-500 border-l-4 border-l-indigo-300 bg-gradient-to-r from-indigo-100">
+              {{i.details}}
+            </div>
+          </div>
+          <div class="flex items-center space-x-2 mt-5">
+            <span>
+              <form action="/done/{{i.id}}/" method="POST">
+                {% csrf_token %}
+                <button value="done" type="submit" class="btn btn-primary">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6 text-green-500 hover:text-indigo-600 hover:cursor-pointer">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </button>
+              </form>
+            </span>
+            <span>
+              <form action="/del/{{i.id}}/" method="POST">
+                {% csrf_token %}
+                <button value="remove" type="submit" class="btn btn-primary">
+                  <span class=""><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                      stroke-width="1.5" stroke="currentColor"
+                      class="w-5 h-5 text-red-500 hover:text-red-900 hover:cursor-pointer">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                    </svg>
+                  </span>
+                </button>
+              </form>
+            </span>
+          </div>
         </div>
-        {% endfor%}
+        {% endfor %}
+        <div>
+          <div>
+            {% if task_done_list %}
+            <h2 class="text-3xl font-medium">Completed Tasks</h2>
+            {% endif %}
+          </div>
+        </div>
+        {% for i in task_done_list %}
+        <div id="task"
+          class="justify-between items-center border-b border-slate-200 py-6 px-1 border-l-4 border-l-transparent bg-gradient-to-r from-transparent to-transparent hover:from-slate-100 transition ease-linear duration-150">
+          <div class="inline-flex items-center space-x-1">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-4 h-4 text-slate-500">
+              <path
+                d="M0 80V229.5c0 17 6.7 33.3 18.7 45.3l176 176c25 25 65.5 25 90.5 0L418.7 317.3c25-25 25-65.5 0-90.5l-176-176c-12-12-28.3-18.7-45.3-18.7H48C21.5 32 0 53.5 0 80zm112 32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z" />
+            </svg>
+            <div class="line-through">{{i.title}}</div>
+          </div>
+          <br />
+          <div class="inline-flex items-center space-x-2">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" stroke="currentColor" fill="currentColor"
+              stroke-width="1.5" class="w-4 h-4">
+              <path
+                d="M128 0c17.7 0 32 14.3 32 32V64H288V32c0-17.7 14.3-32 32-32s32 14.3 32 32V64h48c26.5 0 48 21.5 48 48v48H0V112C0 85.5 21.5 64 48 64H96V32c0-17.7 14.3-32 32-32zM0 192H448V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V192zm64 80v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H80c-8.8 0-16 7.2-16 16zm128 0v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H208c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16H336zM64 400v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H80c-8.8 0-16 7.2-16 16zm144-16c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H208zm112 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V400c0-8.8-7.2-16-16-16H336c-8.8 0-16 7.2-16 16z" />
+            </svg>
+            <div>Task completed on {{i.date}}</div>
+          </div>
+          <br />
+          <div class="inline-flex items-center space-x-2">
+            <div class="text-slate-500 border-l-4 border-l-indigo-300 bg-gradient-to-r from-indigo-100">
+              {{i.details}}
+            </div>
+          </div>
+          <div class="flex items-center space-x-2 mt-5">
+            <span>
+              <form action="/del_done/{{i.id}}/" method="POST">
+                {% csrf_token %}
+                <button value="remove" type="submit" class="btn btn-primary">
+                  <span class=""><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                      stroke-width="1.5" stroke="currentColor"
+                      class="w-5 h-5 text-red-500 hover:text-red-900 hover:cursor-pointer">
+                      <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                    </svg>
+                  </span>
+                </button>
+              </form>
+            </span>
+          </div>
+        </div>
+        {% endfor %}
       </div>
-      <div class="grid-cols-2 bg-cyan-200">
-        <div class="submit_form bg-slate-500 rounded-3xl">
-          <form method="POST" class="p-4 w-5">
-            {% csrf_token %} {{forms}}
-            <center>
-              <input type="submit" class="btn btn-default" value="submit" />
-            </center>
-          </form>
-        </div>
+      <p class="text-xs text-slate-500 text-center">
+        Thank you for using our app
+      </p>
+    </div>
+
+    <div class="">
+      <div class="submit_form">
+        <form method="POST" class="w-full">
+          {% csrf_token %}
+          <div class="w-full max-w-lg px-4 mx-auto my-16">
+            <div class="bg-white relative rounded-lg p-8 sm:p-12 shadow-lg">
+              <form>
+                <div class="mb-6">
+                  <input type="text" placeholder="Title" name="title" class="
+                          w-full
+                          rounded
+                          py-3
+                          px-[14px]
+                          text-body-color text-base
+                          border border-[f0f0f0]
+                          outline-none
+                          focus-visible:shadow-none
+                          focus:border-primary
+                          " required />
+                </div>
+                <div class="mb-6">
+                  <textarea name="details" rows="6" placeholder="Task to do" class="
+                          w-full
+                          rounded
+                          py-3
+                          px-[14px]
+                          text-body-color text-base
+                          border border-[f0f0f0]
+                          resize-none
+                          outline-none
+                          focus-visible:shadow-none
+                          focus:border-primary
+                          " required></textarea>
+                </div>
+                <div>
+                  <button type="submit" class="
+                          w-full
+                          text-white
+                          bg-blue-500
+                          rounded
+                          border border-primary
+                          p-3
+                          transition
+                          hover:bg-opacity-80
+                          focus:ring-2 focus:ring-offset-2 focus:ring-primary
+                          ">
+                    Add to task list
+                  </button>
+                </div>
+              </form>
+              <div>
+                <span class="absolute -top-10 -right-9 z-[-1]">
+                  <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M0 100C0 44.7715 0 0 0 0C55.2285 0 100 44.7715 100 100C100 100 100 100 0 100Z"
+                      fill="#3056D3" />
+                  </svg>
+                </span>
+                <span class="absolute -right-10 top-[90px] z-[-1]">
+                  <svg width="34" height="134" viewBox="0 0 34 134" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="31.9993" cy="132" r="1.66667" transform="rotate(180 31.9993 132)" fill="#13C296" />
+                    <circle cx="31.9993" cy="117.333" r="1.66667" transform="rotate(180 31.9993 117.333)"
+                      fill="#13C296" />
+                    <circle cx="31.9993" cy="102.667" r="1.66667" transform="rotate(180 31.9993 102.667)"
+                      fill="#13C296" />
+                    <circle cx="31.9993" cy="88" r="1.66667" transform="rotate(180 31.9993 88)" fill="#13C296" />
+                    <circle cx="31.9993" cy="73.3333" r="1.66667" transform="rotate(180 31.9993 73.3333)"
+                      fill="#13C296" />
+                    <circle cx="31.9993" cy="45" r="1.66667" transform="rotate(180 31.9993 45)" fill="#13C296" />
+                    <circle cx="31.9993" cy="16" r="1.66667" transform="rotate(180 31.9993 16)" fill="#13C296" />
+                    <circle cx="31.9993" cy="59" r="1.66667" transform="rotate(180 31.9993 59)" fill="#13C296" />
+                    <circle cx="31.9993" cy="30.6666" r="1.66667" transform="rotate(180 31.9993 30.6666)"
+                      fill="#13C296" />
+                    <circle cx="31.9993" cy="1.66665" r="1.66667" transform="rotate(180 31.9993 1.66665)"
+                      fill="#13C296" />
+                    <circle cx="17.3333" cy="132" r="1.66667" transform="rotate(180 17.3333 132)" fill="#13C296" />
+                    <circle cx="17.3333" cy="117.333" r="1.66667" transform="rotate(180 17.3333 117.333)"
+                      fill="#13C296" />
+                    <circle cx="17.3333" cy="102.667" r="1.66667" transform="rotate(180 17.3333 102.667)"
+                      fill="#13C296" />
+                    <circle cx="17.3333" cy="88" r="1.66667" transform="rotate(180 17.3333 88)" fill="#13C296" />
+                    <circle cx="17.3333" cy="73.3333" r="1.66667" transform="rotate(180 17.3333 73.3333)"
+                      fill="#13C296" />
+                    <circle cx="17.3333" cy="45" r="1.66667" transform="rotate(180 17.3333 45)" fill="#13C296" />
+                    <circle cx="17.3333" cy="16" r="1.66667" transform="rotate(180 17.3333 16)" fill="#13C296" />
+                    <circle cx="17.3333" cy="59" r="1.66667" transform="rotate(180 17.3333 59)" fill="#13C296" />
+                    <circle cx="17.3333" cy="30.6666" r="1.66667" transform="rotate(180 17.3333 30.6666)"
+                      fill="#13C296" />
+                    <circle cx="17.3333" cy="1.66665" r="1.66667" transform="rotate(180 17.3333 1.66665)"
+                      fill="#13C296" />
+                    <circle cx="2.66536" cy="132" r="1.66667" transform="rotate(180 2.66536 132)" fill="#13C296" />
+                    <circle cx="2.66536" cy="117.333" r="1.66667" transform="rotate(180 2.66536 117.333)"
+                      fill="#13C296" />
+                    <circle cx="2.66536" cy="102.667" r="1.66667" transform="rotate(180 2.66536 102.667)"
+                      fill="#13C296" />
+                    <circle cx="2.66536" cy="88" r="1.66667" transform="rotate(180 2.66536 88)" fill="#13C296" />
+                    <circle cx="2.66536" cy="73.3333" r="1.66667" transform="rotate(180 2.66536 73.3333)"
+                      fill="#13C296" />
+                    <circle cx="2.66536" cy="45" r="1.66667" transform="rotate(180 2.66536 45)" fill="#13C296" />
+                    <circle cx="2.66536" cy="16" r="1.66667" transform="rotate(180 2.66536 16)" fill="#13C296" />
+                    <circle cx="2.66536" cy="59" r="1.66667" transform="rotate(180 2.66536 59)" fill="#13C296" />
+                    <circle cx="2.66536" cy="30.6666" r="1.66667" transform="rotate(180 2.66536 30.6666)"
+                      fill="#13C296" />
+                    <circle cx="2.66536" cy="1.66665" r="1.66667" transform="rotate(180 2.66536 1.66665)"
+                      fill="#13C296" />
+                  </svg>
+                </span>
+                <span class="absolute -left-7 -bottom-7 z-[-1]">
+                  <svg width="107" height="134" viewBox="0 0 107 134" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="104.999" cy="132" r="1.66667" transform="rotate(180 104.999 132)" fill="#13C296" />
+                    <circle cx="104.999" cy="117.333" r="1.66667" transform="rotate(180 104.999 117.333)"
+                      fill="#13C296" />
+                    <circle cx="104.999" cy="102.667" r="1.66667" transform="rotate(180 104.999 102.667)"
+                      fill="#13C296" />
+                    <circle cx="104.999" cy="88" r="1.66667" transform="rotate(180 104.999 88)" fill="#13C296" />
+                    <circle cx="104.999" cy="73.3333" r="1.66667" transform="rotate(180 104.999 73.3333)"
+                      fill="#13C296" />
+                    <circle cx="104.999" cy="45" r="1.66667" transform="rotate(180 104.999 45)" fill="#13C296" />
+                    <circle cx="104.999" cy="16" r="1.66667" transform="rotate(180 104.999 16)" fill="#13C296" />
+                    <circle cx="104.999" cy="59" r="1.66667" transform="rotate(180 104.999 59)" fill="#13C296" />
+                    <circle cx="104.999" cy="30.6666" r="1.66667" transform="rotate(180 104.999 30.6666)"
+                      fill="#13C296" />
+                    <circle cx="104.999" cy="1.66665" r="1.66667" transform="rotate(180 104.999 1.66665)"
+                      fill="#13C296" />
+                    <circle cx="90.3333" cy="132" r="1.66667" transform="rotate(180 90.3333 132)" fill="#13C296" />
+                    <circle cx="90.3333" cy="117.333" r="1.66667" transform="rotate(180 90.3333 117.333)"
+                      fill="#13C296" />
+                    <circle cx="90.3333" cy="102.667" r="1.66667" transform="rotate(180 90.3333 102.667)"
+                      fill="#13C296" />
+                    <circle cx="90.3333" cy="88" r="1.66667" transform="rotate(180 90.3333 88)" fill="#13C296" />
+                    <circle cx="90.3333" cy="73.3333" r="1.66667" transform="rotate(180 90.3333 73.3333)"
+                      fill="#13C296" />
+                    <circle cx="90.3333" cy="45" r="1.66667" transform="rotate(180 90.3333 45)" fill="#13C296" />
+                    <circle cx="90.3333" cy="16" r="1.66667" transform="rotate(180 90.3333 16)" fill="#13C296" />
+                    <circle cx="90.3333" cy="59" r="1.66667" transform="rotate(180 90.3333 59)" fill="#13C296" />
+                    <circle cx="90.3333" cy="30.6666" r="1.66667" transform="rotate(180 90.3333 30.6666)"
+                      fill="#13C296" />
+                    <circle cx="90.3333" cy="1.66665" r="1.66667" transform="rotate(180 90.3333 1.66665)"
+                      fill="#13C296" />
+                    <circle cx="75.6654" cy="132" r="1.66667" transform="rotate(180 75.6654 132)" fill="#13C296" />
+                    <circle cx="31.9993" cy="132" r="1.66667" transform="rotate(180 31.9993 132)" fill="#13C296" />
+                    <circle cx="75.6654" cy="117.333" r="1.66667" transform="rotate(180 75.6654 117.333)"
+                      fill="#13C296" />
+                    <circle cx="31.9993" cy="117.333" r="1.66667" transform="rotate(180 31.9993 117.333)"
+                      fill="#13C296" />
+                    <circle cx="75.6654" cy="102.667" r="1.66667" transform="rotate(180 75.6654 102.667)"
+                      fill="#13C296" />
+                    <circle cx="31.9993" cy="102.667" r="1.66667" transform="rotate(180 31.9993 102.667)"
+                      fill="#13C296" />
+                    <circle cx="75.6654" cy="88" r="1.66667" transform="rotate(180 75.6654 88)" fill="#13C296" />
+                    <circle cx="31.9993" cy="88" r="1.66667" transform="rotate(180 31.9993 88)" fill="#13C296" />
+                    <circle cx="75.6654" cy="73.3333" r="1.66667" transform="rotate(180 75.6654 73.3333)"
+                      fill="#13C296" />
+                    <circle cx="31.9993" cy="73.3333" r="1.66667" transform="rotate(180 31.9993 73.3333)"
+                      fill="#13C296" />
+                    <circle cx="75.6654" cy="45" r="1.66667" transform="rotate(180 75.6654 45)" fill="#13C296" />
+                    <circle cx="31.9993" cy="45" r="1.66667" transform="rotate(180 31.9993 45)" fill="#13C296" />
+                    <circle cx="75.6654" cy="16" r="1.66667" transform="rotate(180 75.6654 16)" fill="#13C296" />
+                    <circle cx="31.9993" cy="16" r="1.66667" transform="rotate(180 31.9993 16)" fill="#13C296" />
+                    <circle cx="75.6654" cy="59" r="1.66667" transform="rotate(180 75.6654 59)" fill="#13C296" />
+                    <circle cx="31.9993" cy="59" r="1.66667" transform="rotate(180 31.9993 59)" fill="#13C296" />
+                    <circle cx="75.6654" cy="30.6666" r="1.66667" transform="rotate(180 75.6654 30.6666)"
+                      fill="#13C296" />
+                    <circle cx="31.9993" cy="30.6666" r="1.66667" transform="rotate(180 31.9993 30.6666)"
+                      fill="#13C296" />
+                    <circle cx="75.6654" cy="1.66665" r="1.66667" transform="rotate(180 75.6654 1.66665)"
+                      fill="#13C296" />
+                    <circle cx="31.9993" cy="1.66665" r="1.66667" transform="rotate(180 31.9993 1.66665)"
+                      fill="#13C296" />
+                    <circle cx="60.9993" cy="132" r="1.66667" transform="rotate(180 60.9993 132)" fill="#13C296" />
+                    <circle cx="17.3333" cy="132" r="1.66667" transform="rotate(180 17.3333 132)" fill="#13C296" />
+                    <circle cx="60.9993" cy="117.333" r="1.66667" transform="rotate(180 60.9993 117.333)"
+                      fill="#13C296" />
+                    <circle cx="17.3333" cy="117.333" r="1.66667" transform="rotate(180 17.3333 117.333)"
+                      fill="#13C296" />
+                    <circle cx="60.9993" cy="102.667" r="1.66667" transform="rotate(180 60.9993 102.667)"
+                      fill="#13C296" />
+                    <circle cx="17.3333" cy="102.667" r="1.66667" transform="rotate(180 17.3333 102.667)"
+                      fill="#13C296" />
+                    <circle cx="60.9993" cy="88" r="1.66667" transform="rotate(180 60.9993 88)" fill="#13C296" />
+                    <circle cx="17.3333" cy="88" r="1.66667" transform="rotate(180 17.3333 88)" fill="#13C296" />
+                    <circle cx="60.9993" cy="73.3333" r="1.66667" transform="rotate(180 60.9993 73.3333)"
+                      fill="#13C296" />
+                    <circle cx="17.3333" cy="73.3333" r="1.66667" transform="rotate(180 17.3333 73.3333)"
+                      fill="#13C296" />
+                    <circle cx="60.9993" cy="45" r="1.66667" transform="rotate(180 60.9993 45)" fill="#13C296" />
+                    <circle cx="17.3333" cy="45" r="1.66667" transform="rotate(180 17.3333 45)" fill="#13C296" />
+                    <circle cx="60.9993" cy="16" r="1.66667" transform="rotate(180 60.9993 16)" fill="#13C296" />
+                    <circle cx="17.3333" cy="16" r="1.66667" transform="rotate(180 17.3333 16)" fill="#13C296" />
+                    <circle cx="60.9993" cy="59" r="1.66667" transform="rotate(180 60.9993 59)" fill="#13C296" />
+                    <circle cx="17.3333" cy="59" r="1.66667" transform="rotate(180 17.3333 59)" fill="#13C296" />
+                    <circle cx="60.9993" cy="30.6666" r="1.66667" transform="rotate(180 60.9993 30.6666)"
+                      fill="#13C296" />
+                    <circle cx="17.3333" cy="30.6666" r="1.66667" transform="rotate(180 17.3333 30.6666)"
+                      fill="#13C296" />
+                    <circle cx="60.9993" cy="1.66665" r="1.66667" transform="rotate(180 60.9993 1.66665)"
+                      fill="#13C296" />
+                    <circle cx="17.3333" cy="1.66665" r="1.66667" transform="rotate(180 17.3333 1.66665)"
+                      fill="#13C296" />
+                    <circle cx="46.3333" cy="132" r="1.66667" transform="rotate(180 46.3333 132)" fill="#13C296" />
+                    <circle cx="2.66536" cy="132" r="1.66667" transform="rotate(180 2.66536 132)" fill="#13C296" />
+                    <circle cx="46.3333" cy="117.333" r="1.66667" transform="rotate(180 46.3333 117.333)"
+                      fill="#13C296" />
+                    <circle cx="2.66536" cy="117.333" r="1.66667" transform="rotate(180 2.66536 117.333)"
+                      fill="#13C296" />
+                    <circle cx="46.3333" cy="102.667" r="1.66667" transform="rotate(180 46.3333 102.667)"
+                      fill="#13C296" />
+                    <circle cx="2.66536" cy="102.667" r="1.66667" transform="rotate(180 2.66536 102.667)"
+                      fill="#13C296" />
+                    <circle cx="46.3333" cy="88" r="1.66667" transform="rotate(180 46.3333 88)" fill="#13C296" />
+                    <circle cx="2.66536" cy="88" r="1.66667" transform="rotate(180 2.66536 88)" fill="#13C296" />
+                    <circle cx="46.3333" cy="73.3333" r="1.66667" transform="rotate(180 46.3333 73.3333)"
+                      fill="#13C296" />
+                    <circle cx="2.66536" cy="73.3333" r="1.66667" transform="rotate(180 2.66536 73.3333)"
+                      fill="#13C296" />
+                    <circle cx="46.3333" cy="45" r="1.66667" transform="rotate(180 46.3333 45)" fill="#13C296" />
+                    <circle cx="2.66536" cy="45" r="1.66667" transform="rotate(180 2.66536 45)" fill="#13C296" />
+                    <circle cx="46.3333" cy="16" r="1.66667" transform="rotate(180 46.3333 16)" fill="#13C296" />
+                    <circle cx="2.66536" cy="16" r="1.66667" transform="rotate(180 2.66536 16)" fill="#13C296" />
+                    <circle cx="46.3333" cy="59" r="1.66667" transform="rotate(180 46.3333 59)" fill="#13C296" />
+                    <circle cx="2.66536" cy="59" r="1.66667" transform="rotate(180 2.66536 59)" fill="#13C296" />
+                    <circle cx="46.3333" cy="30.6666" r="1.66667" transform="rotate(180 46.3333 30.6666)"
+                      fill="#13C296" />
+                    <circle cx="2.66536" cy="30.6666" r="1.66667" transform="rotate(180 2.66536 30.6666)"
+                      fill="#13C296" />
+                    <circle cx="46.3333" cy="1.66665" r="1.66667" transform="rotate(180 46.3333 1.66665)"
+                      fill="#13C296" />
+                    <circle cx="2.66536" cy="1.66665" r="1.66667" transform="rotate(180 2.66536 1.66665)"
+                      fill="#13C296" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>
